@@ -10,7 +10,7 @@ export class AuthService {
 
 // funcion para registro
 registrar(email: string, password:string){
-  return this.auth.signInWithEmailandPassword)(email,password);
+  return this.auth.signInWithEmailAndPassword(email,password);
 }
 //inicio sesion
   IniciarSesion (email:string,password:string){
