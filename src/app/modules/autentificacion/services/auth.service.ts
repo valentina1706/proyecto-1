@@ -16,4 +16,14 @@ registrar(email: string, password:string){
   IniciarSesion (email:string,password:string){
     return this.auth.signInWithEmailAndPassword(email,password);
   }
+
+  //funcion para cerrar sesion
+  CerrarSesion(){
+    //devuelve una promesa vacia -> quita token
+    return this.auth.signOut();
+
+  }
+
+    //funcion para tomar el uid
+
 }

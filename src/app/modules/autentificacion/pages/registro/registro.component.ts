@@ -57,7 +57,7 @@ export class RegistroComponent {
     //el metodo then es una promesa
     .then(res =>{
       alert("se pudo registrar con exito :)");
-      this.servicioRutas.navigate('/inicio');
+      this.servicioRutas.navigate([ '/inicio']);
     })
     //el metodo catch captura una falla y la vuelve un error cuando la promesa salga mal
     .catch(error => {
