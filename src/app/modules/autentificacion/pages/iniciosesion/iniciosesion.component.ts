@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
+import { AuthService } from '../../services/auth.service';
+import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-iniciosesion',
@@ -10,7 +13,7 @@ export class IniciosesionComponent {
   hide = true;
   // ############################# LOCAL
   // Definimos colección local de usuarios
-  public coleccionUsuariosLocales: Usuario[];
+ /*public coleccionUsuariosLocales: Usuario[];
 
   constructor(){
     this.coleccionUsuariosLocales = [
@@ -40,8 +43,14 @@ export class IniciosesionComponent {
       }
     ]
   }
-
+*/
   // ############################# FIN LOCAL
+
+  constructor(
+public servicioAuth: AuthService,
+public servicioFirestore: FirestoreService,
+public servicioRutas: Router
+){}
 
   // ############################# INGRESADO
   // Definimos la interfaz de usuario
@@ -55,8 +64,10 @@ export class IniciosesionComponent {
   }
 
   // Función para iniciar sesión
-  iniciarSesion(){
+  async iniciarSesion(){
     // Recibe la información ingresada desde el navegador
+   
+   /*
     const credenciales = {
       uid: this.usuarios.uid,
       nombre: this.usuarios.nombre,
@@ -86,6 +97,27 @@ export class IniciosesionComponent {
           break;
         }
     }
+
+
+
+*/
+
+const credenciales = {
+  email:this.usuarios.email,
+  password: this.usuarios.password
+}
+const res = await this.servicioAuth.IniciarSesion (credenciales.email, credenciales.password)
+.then(res => {
+  alert('¡Se pudo ingresar con exito!');
+
+  this.servicioRutas.navigate([ '/inicio']);
+})
+.catch(err => {
+alert('Hubo un problema al iniciar sesion')
+}
+)
+
+
     this.limpiarInputs();
   }
   // ############################# FIN INGRESADO

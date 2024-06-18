@@ -3,6 +3,8 @@ import { Usuario } from 'src/app/models/usuario';
 //importamos servicio de autentificacion
 import { AuthService } from '../../services/auth.service';
 
+import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -31,6 +33,7 @@ export class RegistroComponent {
 
   constructor (
     public servicioAuth: AuthService,
+    public servicioFirestore: FirestoreService,
     public servicioRutas: Router
   ) {}
 
@@ -78,6 +81,25 @@ export class RegistroComponent {
     // console.log(this.coleccionUsuarios);
   }
 
+  async guardarUsuario (){
+    this.servicioFirestore.agregarUsuario(this.usuarios,this.usuarios.uid)
+    .then(res => {
+      console.log(this.usuarios);
+    })
+    .catch(err => {
+      console.log('error => ', err)
+    })
+  
+
+  const uid = await this.servicioAuth.obtenerUid();
+
+  this.usuarios.uid =uid;
+
+    this.guardarUsuario();
+
+    this.limpiarInputs();
+
+  }
   // Función para vaciar los inputs del formulario
   limpiarInputs(){
     /*

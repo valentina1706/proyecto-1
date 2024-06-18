@@ -13,4 +13,25 @@ private usuariosCollection: AngularFirestoreCollection<Usuario>
     //usuariosCollection va a definir la nueva coleccion de Firestore que respete la estructura de nuestra interfaz 'usuario'
     this.usuariosCollection= this.database.collection<Usuario>('usuarios');
   }
+  agregarUsuario(usuario: Usuario, id: string){
+
+    //creamos una nueva promesa con los metodos:
+    /*resolve: promesa resuelta -> funciono correctamente
+    reject: promesa rechazada -> ocurrio una falla*/
+    return new Promise (async (resolve, reject) => {
+      //bloque try encapsula la logica resuelta
+      try {
+        usuario.uid =id;
+
+        const resultado = await this.usuariosCollection.doc(id).set(usuario);
+        
+        resolve (resultado);
+
+        //bloque catch encapsula la logica rechazada
+      } catch (error) {
+
+        reject (error);
+      }
+    })
+  }
 }

@@ -25,5 +25,16 @@ registrar(email: string, password:string){
   }
 
     //funcion para tomar el uid
+    async obtenerUid (){
+      //Nos va a generar una promesa y la constante la va a capturar
+      const user = await this.auth.currentUser;
+      //si es usuario que se registra no respeta la estructura de la interfaz o si tuvo problemas para el registro -> ej:mal internet
+      if(user==null){
+        return null;
+
+      } else {
+        return user.uid;
+      }
+    }
 
 }
