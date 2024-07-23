@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import{AngularFireAuth} from "@angular/fire/compat/auth";
 
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +37,11 @@ registrar(email: string, password:string){
       } else {
         return user.uid;
       }
+    }
+
+
+    obtenerUsuario(email: string) {
+      return this.servicioFirestore.collection('usuarios', ref => ref.where('email', '==', email)).get.toPromise()
     }
 
 }

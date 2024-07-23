@@ -3,6 +3,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { AuthService } from '../../services/auth.service';
 import { FirestoreService } from 'src/app/modules/shared/services/firestore.service';
 import { Router } from '@angular/router';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-iniciosesion',
@@ -116,6 +117,20 @@ const res = await this.servicioAuth.IniciarSesion (credenciales.email, credencia
 alert('Hubo un problema al iniciar sesion')
 }
 )
+
+const usuarioBD
+
+
+const usuarioDoc = usuarioBD.docs[0];
+
+
+const usuarioData = usuarioDoc.data() as Usuario;
+
+const hashedPassword = CryptoJS.SHA256(credenciales.password).toString();
+
+if (hashedPassword !== usuarioData.password) {
+  alert("Contraseña incorrecta");
+}
 
 
     this.limpiarInputs();
